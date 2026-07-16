@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmer Wayne Seeds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Zilla+Slab:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --soil: #1C2116;
+    --soil-light: #2A3222;
+    --parchment: #F3EEE1;
+    --parchment-dim: #E7E0CC;
+    --sorghum: #B4552B;
+    --sorghum-dark: #8E4222;
+    --wheat: #D9A441;
+    --sky: #6FA8C7;
+    --ink: #211D14;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--soil);
+    color: var(--parchment);
+    font-family: 'Zilla Slab', serif;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3, .eyebrow, nav a, .btn {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .mono { font-family: 'Space Mono', monospace; }
+
+  a { color: inherit; text-decoration: none; }
+
+  img { max-width: 100%; display: block; }
+
+  .wrap {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* NAV */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--soil);
+    border-bottom: 3px solid var(--sorghum);
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+
+  .brand {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--wheat);
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+  }
+
+  nav a {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--parchment-dim);
+    border-bottom: 2px solid transparent;
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  nav a:hover { color: var(--wheat); border-color: var(--wheat); }
+
+  .navtoggle { display: none; background: none; border: none; color: var(--parchment); font-size: 26px; cursor: pointer; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 3px solid var(--sorghum);
+  }
+
+  .hero img { width: 100%; height: auto; display: block; }
+
+  .hero-strip {
+    background: var(--sorghum);
+    color: var(--parchment);
+    text-align: center;
+    padding: 12px 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* SECTION SHELL */
+  section { padding: 72px 0; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--wheat);
+    margin-bottom: 14px;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 22px;
+    height: 2px;
+    background: var(--wheat);
+  }
+
+  h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    color: var(--parchment);
+    margin-bottom: 8px;
+  }
+
+  .section-intro {
+    max-width: 560px;
+    color: var(--parchment-dim);
+    font-size: 17px;
+    margin-bottom: 40px;
+  }
+
+  /* VIDEO */
+  .video-block {
+    background: var(--soil-light);
+    border: 1px solid #3A4530;
+    border-radius: 4px;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .video-frame {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: #000;
+    border: 2px solid var(--wheat);
+  }
+
+  .video-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .video-text .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--sky);
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .video-text h3 { font-size: 24px; color: var(--parchment); margin-bottom: 12px; }
+  .video-text p { color: var(--parchment-dim); font-size: 15px; margin-bottom: 20px; }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-block;
+    background: var(--sorghum);
+    color: var(--parchment);
+    padding: 12px 26px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: var(--sorghum-dark); }
+
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--wheat);
+    color: var(--wheat);
+  }
+  .btn-outline:hover { background: var(--wheat); color: var(--soil); }
+
+  /* PACKET CARDS (SEEDS) */
+  .packet-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .packet {
+    background: var(--parchment);
+    color: var(--ink);
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .packet-band {
+    height: 10px;
+    width: 100%;
+  }
+  .band-sorghum { background: var(--sorghum); }
+  .band-wheat { background: var(--wheat); }
+  .band-sky { background: var(--sky); }
+
+  .packet-perf {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 18px 0 18px;
+  }
+
+  .packet-perf span {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #8a8370;
+  }
+
+  .packet-body { padding: 6px 22px 24px 22px; flex-grow: 1; display: flex; flex-direction: column; }
+
+  .packet-body h3 {
+    font-size: 20px;
+    margin: 8px 0 6px 0;
+    color: var(--ink);
+  }
+
+  .packet-body p {
+    font-size: 14px;
+    color: #4b4636;
+    flex-grow: 1;
+    margin-bottom: 16px;
+  }
+
+  .packet-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px dashed #b8b19a;
+    padding-top: 14px;
+  }
+
+  .price {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .mini-btn {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+  }
+  .mini-btn:hover { background: var(--sorghum); }
+
+  /* BOOKS */
+  .shelf {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .book {
+    background: var(--soil-light);
+    border: 1px solid #3A4530;
+    padding: 24px;
+  }
+
+  .book-spine {
+    width: 100%;
+    height: 6px;
+    background: var(--sky);
+    margin-bottom: 18px;
+  }
+
+  .book h3 { font-size: 19px; color: var(--parchment); margin-bottom: 8px; }
+  .book p { color: var(--parchment-dim); font-size: 14px; margin-bottom: 18px; }
+
+  /* STORIES */
+  .journal { display: flex; flex-direction: column; }
+
+  .entry {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 28px;
+    padding: 28px 0;
+    border-bottom: 1px solid #3A4530;
+  }
+  .entry:first-child { padding-top: 0; }
+
+  .entry-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--wheat);
+  }
+
+  .entry h3 { font-size: 21px; color: var(--parchment); margin-bottom: 8px; }
+  .entry p { color: var(--parchment-dim); font-size: 15px; }
+  .entry a { color: var(--sky); font-family: 'Space Mono', monospace; font-size: 13px; display: inline-block; margin-top: 10px; }
+
+  /* JOIN */
+  .join {
+    background: var(--sorghum);
+    text-align: center;
+    padding: 64px 24px;
+  }
+  .join h2 { color: var(--parchment); }
+  .join .section-intro { color: #f5e2d5; margin: 0 auto 28px auto; }
+  .join form {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .join input[type="email"] {
+    padding: 12px 16px;
+    border: 2px solid var(--soil);
+    font-family: 'Zilla Slab', serif;
+    font-size: 15px;
+    min-width: 260px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--soil);
+    border-top: 3px solid var(--sorghum);
+    padding: 40px 24px 28px 24px;
+  }
+  .footer-grid {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  .footer-grid .brand { margin-bottom: 6px; }
+  .footer-grid p { color: var(--parchment-dim); font-size: 14px; max-width: 320px; }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { font-size: 13px; color: var(--parchment-dim); }
+  .footer-links a:hover { color: var(--wheat); }
+  .footer-bottom {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: #5c6250;
+    border-top: 1px solid #3A4530;
+    padding-top: 20px;
+  }
+
+  @media (max-width: 860px) {
+    .video-block { grid-template-columns: 1fr; }
+    .packet-grid, .shelf { grid-template-columns: 1fr; }
+    .entry { grid-template-columns: 1fr; gap: 6px; }
+    nav ul { display: none; }
+    .navtoggle { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="navbar">
+    <div class="brand">Farmer Wayne Seeds</div>
+    <nav>
+      <ul>
+        <li><a href="#video">Latest Video</a></li>
+        <li><a href="#seeds">Seeds</a></li>
+        <li><a href="#books">Books</a></li>
+        <li><a href="#stories">Stories</a></li>
+        <li><a href="#join">Join the Hub</a></li>
+      </ul>
+    </nav>
+    <button class="navtoggle" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<div class="hero">
+  <img src="hero.jpg" alt="Farmer Wayne standing in a sorghum field, holding a seed head">
+</div>
+<div class="hero-strip">Real seeds. Real stories. Grown on the same ground since day one.</div>
+
+<section id="video">
+  <div class="wrap">
+    <div class="eyebrow mono">From the paddock</div>
+    <h2>Latest Video</h2>
+    <p class="section-intro">Straight from the farm — what's growing, what's changed, and what I've learned this week.</p>
+
+    <div class="video-block">
+      <div class="video-frame">
+        <!-- Replace VIDEO_ID with your YouTube video ID -->
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Latest video from Farmer Wayne" allowfullscreen></iframe>
+      </div>
+      <div class="video-text">
+        <span class="tag mono">NEW UPLOAD</span>
+        <h3>This Week on the Farm</h3>
+        <p>Swap in your latest upload — planting updates, harvest walk-throughs, or just what's happening around the place this week.</p>
+        <a class="btn" href="#" target="_blank">Watch on YouTube</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="seeds">
+  <div class="wrap">
+    <div class="eyebrow mono">Packet no. 001–003</div>
+    <h2>Seeds for Sale</h2>
+    <p class="section-intro">Grown, saved, and packed by hand. Update prices and varieties as your stock changes.</p>
+
+    <div class="packet-grid">
+      <div class="packet">
+        <div class="packet-band band-sorghum"></div>
+        <div class="packet-perf"><span>SORGHUM-01</span><span>PACKET NO. 001</span></div>
+        <div class="packet-body">
+          <h3>Grain Sorghum</h3>
+          <p>Hardy, drought-tolerant, straight off the home paddock. Great for beginners and old hands alike.</p>
+          <div class="packet-foot">
+            <span class="price">$8.00</span>
+            <button class="mini-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="packet">
+        <div class="packet-band band-wheat"></div>
+        <div class="packet-perf"><span>WHEAT-02</span><span>PACKET NO. 002</span></div>
+        <div class="packet-body">
+          <h3>Heritage Wheat</h3>
+          <p>An old-school variety saved season after season. Good yield, reliable, tried and tested.</p>
+          <div class="packet-foot">
+            <span class="price">$6.50</span>
+            <button class="mini-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="packet">
+        <div class="packet-band band-sky"></div>
+        <div class="packet-perf"><span>GARDEN-03</span><span>PACKET NO. 003</span></div>
+        <div class="packet-body">
+          <h3>Backyard Garden Mix</h3>
+          <p>A mixed pack for the home veggie patch — perfect for anyone starting their own small hub.</p>
+          <div class="packet-foot">
+            <span class="price">$5.00</span>
+            <button class="mini-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="books">
+  <div class="wrap">
+    <div class="eyebrow mono">On the shelf</div>
+    <h2>Books</h2>
+    <p class="section-intro">Stories and know-how from the farm, written down and bound.</p>
+
+    <div class="shelf">
+      <div class="book">
+        <div class="book-spine"></div>
+        <h3>Book Title One</h3>
+        <p>Short description of what this book covers and why people should pick it up.</p>
+        <a class="btn btn-outline" href="#">Buy the Book</a>
+      </div>
+      <div class="book">
+        <div class="book-spine"></div>
+        <h3>Book Title Two</h3>
+        <p>Short description of what this book covers and why people should pick it up.</p>
+        <a class="btn btn-outline" href="#">Buy the Book</a>
+      </div>
+      <div class="book">
+        <div class="book-spine"></div>
+        <h3>Book Title Three</h3>
+        <p>Short description of what this book covers and why people should pick it up.</p>
+        <a class="btn btn-outline" href="#">Buy the Book</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stories">
+  <div class="wrap">
+    <div class="eyebrow mono">The logbook</div>
+    <h2>Stories</h2>
+    <p class="section-intro">Notes from the farm — what's growing, what's breaking down, and what's worth remembering.</p>
+
+    <div class="journal">
+      <div class="entry">
+        <div class="entry-date">JUL 2026</div>
+        <div>
+          <h3>Title of Your First Story</h3>
+          <p>A short excerpt or summary of this story goes here. Replace with your own words once you're ready.</p>
+          <a href="#">Read more →</a>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="entry-date">JUN 2026</div>
+        <div>
+          <h3>Title of Another Story</h3>
+          <p>A short excerpt or summary of this story goes here. Replace with your own words once you're ready.</p>
+          <a href="#">Read more →</a>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="entry-date">MAY 2026</div>
+        <div>
+          <h3>Title of an Older Story</h3>
+          <p>A short excerpt or summary of this story goes here. Replace with your own words once you're ready.</p>
+          <a href="#">Read more →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join" class="join">
+  <div class="wrap">
+    <h2>Join the Hub</h2>
+    <p class="section-intro">New seeds, new stories, new uploads — straight to your inbox when they land.</p>
+    <form>
+      <input type="email" placeholder="you@email.com" required>
+      <button type="submit" class="mini-btn" style="background: var(--soil);">Sign Up</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand">Farmer Wayne Seeds</div>
+        <p>A community farming hub — seeds, stories, books, and everything growing in between.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#video">Latest Video</a>
+        <a href="#seeds">Seeds</a>
+        <a href="#books">Books</a>
+        <a href="#stories">Stories</a>
+      </div>
+    </div>
+    <div class="footer-bottom mono">© 2026 Farmer Wayne Seeds. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
