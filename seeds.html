@@ -1,1 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seeds for Sale — Farmer Wayne Seeds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Zilla+Slab:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --soil: #182016;
+    --soil-light: #24301F;
+    --parchment: #F3EEE1;
+    --parchment-dim: #E4E7D6;
+    --leaf: #5C7A3B;
+    --leaf-dark: #46602C;
+    --moss: #8FA968;
+    --wheat: #D9A441;
+    --bloom: #B4552B;
+    --sky: #6FA8C7;
+    --ink: #211D14;
+  }
 
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--soil);
+    color: var(--parchment);
+    font-family: 'Zilla Slab', serif;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3, .eyebrow, nav a, .btn, .tab {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .mono { font-family: 'Space Mono', monospace; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+  /* NAV */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--soil);
+    border-bottom: 3px solid var(--leaf);
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+
+  .brand { font-size: 20px; font-weight: 700; color: var(--wheat); }
+  .nav-right { display: flex; align-items: center; }
+
+  nav ul { list-style: none; display: flex; gap: 28px; }
+  nav a {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--parchment-dim);
+    border-bottom: 2px solid transparent;
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  nav a:hover, nav a.active { color: var(--moss); border-color: var(--moss); }
+
+  .cart-icon {
+    position: relative;
+    background: none;
+    border: none;
+    color: var(--parchment);
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 20px;
+  }
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: var(--leaf);
+    color: var(--parchment);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* PAGE HEAD */
+  .page-head {
+    padding: 64px 0 32px 0;
+    text-align: center;
+    background: linear-gradient(180deg, var(--soil-light), var(--soil));
+    border-bottom: 3px solid var(--leaf);
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--moss);
+    margin-bottom: 14px;
+  }
+  .eyebrow::before, .eyebrow::after {
+    content: "";
+    width: 22px;
+    height: 2px;
+    background: var(--moss);
+  }
+  .page-head h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    color: var(--parchment);
+    margin-bottom: 10px;
+  }
+  .page-head p {
+    max-width: 560px;
+    margin: 0 auto;
+    color: var(--parchment-dim);
+    font-size: 17px;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 32px 24px 0 24px;
+  }
+  .tab {
+    background: var(--soil-light);
+    border: 2px solid var(--leaf);
+    color: var(--parchment-dim);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+  .tab:hover { border-color: var(--moss); color: var(--parchment); }
+  .tab.active { background: var(--leaf); border-color: var(--leaf); color: var(--parchment); }
+
+  /* GRID */
+  .catalog { padding: 48px 0 96px 0; }
+  .cat-section { display: none; }
+  .cat-section.active { display: block; }
+
+  .cat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--moss);
+    margin-bottom: 20px;
+  }
+
+  .packet-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .packet {
+    background: var(--parchment);
+    color: var(--ink);
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.15s;
+    border: none;
+    text-align: left;
+    font-family: inherit;
+    width: 100%;
+  }
+  .packet:hover { transform: translateY(-4px); }
+
+  .packet-band { height: 10px; width: 100%; }
+  .band-leaf { background: var(--leaf); }
+  .band-wheat { background: var(--wheat); }
+  .band-bloom { background: var(--bloom); }
+  .band-moss { background: var(--moss); }
+
+  .packet-perf {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 18px 0 18px;
+  }
+  .packet-perf span {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #8a8370;
+  }
+
+  .packet-body { padding: 6px 22px 24px 22px; flex-grow: 1; display: flex; flex-direction: column; }
+  .packet-body h3 { font-size: 20px; margin: 8px 0 6px 0; color: var(--ink); }
+  .packet-body p { font-size: 14px; color: #4b4636; flex-grow: 1; margin-bottom: 16px; }
+
+  .packet-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px dashed #b8b19a;
+    padding-top: 14px;
+  }
+  .price { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 16px; }
+  .view-tag {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--leaf-dark);
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 14, 8, 0.75);
+    z-index: 300;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--parchment);
+    color: var(--ink);
+    max-width: 460px;
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .modal-band { height: 12px; width: 100%; }
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: rgba(0,0,0,0.15);
+    border: none;
+    color: var(--ink);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .modal-content { padding: 30px; }
+  .modal-perf {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #8a8370;
+    margin-bottom: 10px;
+  }
+  .modal h2 {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-size: 26px;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .modal p.desc { font-size: 15px; color: #4b4636; margin-bottom: 18px; }
+
+  .modal-facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    font-size: 13px;
+    margin-bottom: 22px;
+    border-top: 1px dashed #b8b19a;
+    border-bottom: 1px dashed #b8b19a;
+    padding: 16px 0;
+  }
+  .modal-facts div span:first-child {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #8a8370;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .modal-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-price { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 22px; }
+
+  .mini-btn {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .mini-btn:hover { background: var(--leaf-dark); }
+
+  /* CART DRAWER */
+  .cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 250;
+    display: none;
+  }
+  .cart-overlay.open { display: block; }
+
+  .cart-drawer {
+    position: fixed;
+    top: 0;
+    right: -380px;
+    width: 360px;
+    max-width: 90vw;
+    height: 100vh;
+    background: var(--soil-light);
+    border-left: 3px solid var(--leaf);
+    z-index: 260;
+    transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+  }
+  .cart-drawer.open { right: 0; }
+  .cart-drawer h3 {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cart-drawer .close-cart { background: none; border: none; color: var(--parchment); font-size: 22px; cursor: pointer; }
+  .cart-items { flex-grow: 1; overflow-y: auto; }
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #3A4530;
+    font-size: 14px;
+    color: var(--parchment-dim);
+    gap: 10px;
+  }
+  .cart-item .remove-item { background: none; border: none; color: var(--bloom); cursor: pointer; font-size: 13px; margin-left: 8px; }
+  .cart-empty { color: var(--parchment-dim); font-size: 14px; padding: 20px 0; }
+  .cart-total {
+    border-top: 1px solid #3A4530;
+    padding-top: 16px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Space Mono', monospace;
+    color: var(--parchment);
+    font-size: 16px;
+  }
+  .paypal-secure {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--sky);
+    margin-top: 14px;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--leaf);
+    color: var(--parchment);
+    padding: 12px 26px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: var(--leaf-dark); }
+
+  /* FOOTER */
+  footer {
+    background: var(--soil);
+    border-top: 3px solid var(--leaf);
+    padding: 32px 24px;
+    text-align: center;
+  }
+  .footer-secure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--sky);
+    margin-bottom: 10px;
+  }
+  footer p { color: #5c6250; font-size: 12px; font-family: 'Space Mono', monospace; }
+
+  @media (max-width: 860px) {
+    .packet-grid { grid-template-columns: 1fr; }
+    nav ul { display: none; }
+    .modal-facts { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="navbar">
+    <div class="brand">Farmer Wayne Seeds</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="seeds.html" class="active">Seeds for Sale</a></li>
+        <li><a href="index.html#books">Books</a></li>
+        <li><a href="index.html#stories">Stories</a></li>
+        <li><a href="index.html#join">Join the Hub</a></li>
+      </ul>
+    </nav>
+    <div class="nav-right">
+      <button class="cart-icon" onclick="toggleCart()" aria-label="Cart">
+        🛒
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="page-head">
+  <div class="wrap">
+    <div class="eyebrow mono">From the paddock</div>
+    <h1>Seeds for Sale</h1>
+    <p>Hand-grown, hand-saved, hand-packed. Tap any packet to see the full details before you add it to your cart.</p>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showCat('seeds', this)">🌱 Seeds</button>
+  <button class="tab" onclick="showCat('flowers', this)">🌸 Flowers</button>
+  <button class="tab" onclick="showCat('grain', this)">🌾 Grain Cropping</button>
+</div>
+
+<section class="catalog">
+  <div class="wrap">
+
+    <!-- SEEDS -->
+    <div class="cat-section active" id="cat-seeds">
+      <div class="cat-label mono">Vegetable &amp; garden seeds</div>
+      <div class="packet-grid" id="grid-seeds"></div>
+    </div>
+
+    <!-- FLOWERS -->
+    <div class="cat-section" id="cat-flowers">
+      <div class="cat-label mono">Flower seeds</div>
+      <div class="packet-grid" id="grid-flowers"></div>
+    </div>
+
+    <!-- GRAIN -->
+    <div class="cat-section" id="cat-grain">
+      <div class="cat-label mono">Grain cropping</div>
+      <div class="packet-grid" id="grid-grain"></div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-secure">🔒 All shopping secured with PayPal</div>
+  <p>© 2026 Farmer Wayne Seeds. All rights reserved.</p>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalBg(event)">
+  <div class="modal" id="modal">
+    <div class="modal-band" id="modalBand"></div>
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-content">
+      <div class="modal-perf" id="modalPerf"></div>
+      <h2 id="modalName"></h2>
+      <p class="desc" id="modalDesc"></p>
+      <div class="modal-facts" id="modalFacts"></div>
+      <div class="modal-foot">
+        <span class="modal-price" id="modalPrice"></span>
+        <button class="mini-btn" id="modalAddBtn">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <h3>Your Cart <button class="close-cart" onclick="toggleCart()">×</button></h3>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">Your cart is empty. Add some seeds!</div>
+  </div>
+  <div>
+    <div class="cart-total"><span>Total</span><span id="cartTotal">$0.00</span></div>
+    <div class="paypal-secure">🔒 All shopping secured with PayPal</div>
+    <button class="btn" style="width:100%; margin-top:16px;" onclick="checkout()">Checkout</button>
+  </div>
+</div>
+
+<script>
+  /* =========================
+     PRODUCT DATA
+     Edit names, prices, descriptions and facts here.
+  ========================= */
+  const products = {
+    seeds: [
+      { code: 'SORGHUM-01', band: 'band-leaf', name: 'Grain Sorghum', price: 8.00,
+        desc: 'Hardy, drought-tolerant, straight off the home paddock. Great for beginners and old hands alike.',
+        facts: { 'Sun': 'Full sun', 'Sow': 'Spring', 'Harvest': '90–120 days', 'Spacing': '20cm' } },
+      { code: 'GARDEN-03', band: 'band-moss', name: 'Backyard Garden Mix', price: 5.00,
+        desc: 'A mixed pack for the home veggie patch — perfect for anyone starting their own small hub.',
+        facts: { 'Sun': 'Full sun', 'Sow': 'Spring–Summer', 'Harvest': 'Varies', 'Spacing': '15cm' } },
+      { code: 'TOMATO-04', band: 'band-bloom', name: 'Heirloom Tomato', price: 6.00,
+        desc: 'Old family variety, rich flavour, reliable cropper for the backyard veggie patch.',
+        facts: { 'Sun': 'Full sun', 'Sow': 'Spring', 'Harvest': '70–85 days', 'Spacing': '45cm' } },
+    ],
+    flowers: [
+      { code: 'SUNFLW-05', band: 'band-wheat', name: 'Farmhouse Sunflower', price: 4.50,
+        desc: 'Big, bold, and beloved by the bees. A paddock-edge favourite that self-seeds year after year.',
+        facts: { 'Sun': 'Full sun', 'Sow': 'Spring', 'Bloom': 'Summer', 'Height': '1.5–2.5m' } },
+      { code: 'MARIGD-06', band: 'band-bloom', name: 'Cottage Marigold', price: 3.50,
+        desc: 'Cheerful and low-maintenance — great as a border planting or companion near the veggie beds.',
+        facts: { 'Sun': 'Full sun', 'Sow': 'Spring–Autumn', 'Bloom': '8 weeks', 'Height': '30cm' } },
+      { code: 'WLDFLR-07', band: 'band-moss', name: 'Native Wildflower Mix', price: 5.50,
+        desc: 'A hand-blended mix of native varieties, good for attracting pollinators around the property.',
+        facts: { 'Sun': 'Full sun', 'Sow': 'Autumn–Spring', 'Bloom': 'Seasonal', 'Height': 'Mixed' } },
+    ],
+    grain: [
+      { code: 'WHEAT-02', band: 'band-wheat', name: 'Heritage Wheat', price: 6.50,
+        desc: 'An old-school variety saved season after season. Good yield, reliable, tried and tested.',
+        facts: { 'Sun': 'Full sun', 'Sow': 'Autumn', 'Harvest': 'Early summer', 'Spacing': 'Broadcast' } },
+      { code: 'BARLEY-08', band: 'band-leaf', name: 'Bald Barley', price: 6.00,
+        desc: 'A tough, adaptable grain crop suited to mixed farms and rougher paddock ground.',
+        facts: { 'Sun': 'Full sun', 'Sow': 'Autumn–Winter', 'Harvest': 'Summer', 'Spacing': 'Broadcast' } },
+      { code: 'OATS-09', band: 'band-moss', name: 'Milling Oats', price: 5.50,
+        desc: 'Good ground-cover crop and reliable grain yield, easy to work into a rotation.',
+        facts: { 'Sun': 'Full sun', 'Sow': 'Autumn', 'Harvest': 'Late spring', 'Spacing': 'Broadcast' } },
+    ]
+  };
+
+  /* =========================
+     RENDER GRIDS
+  ========================= */
+  function renderGrid(catKey) {
+    const grid = document.getElementById('grid-' + catKey);
+    grid.innerHTML = products[catKey].map((p, i) => `
+      <button class="packet" onclick="openModal('${catKey}', ${i})">
+        <div class="packet-band ${p.band}"></div>
+        <div class="packet-perf"><span>${p.code}</span><span>TAP FOR DETAILS</span></div>
+        <div class="packet-body">
+          <h3>${p.name}</h3>
+          <p>${p.desc}</p>
+          <div class="packet-foot">
+            <span class="price">$${p.price.toFixed(2)}</span>
+            <span class="view-tag">View →</span>
+          </div>
+        </div>
+      </button>
+    `).join('');
+  }
+  renderGrid('seeds');
+  renderGrid('flowers');
+  renderGrid('grain');
+
+  /* =========================
+     TABS
+  ========================= */
+  function showCat(catKey, btn) {
+    document.querySelectorAll('.cat-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('cat-' + catKey).classList.add('active');
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  /* =========================
+     MODAL
+  ========================= */
+  let currentProduct = null;
+
+  function openModal(catKey, index) {
+    const p = products[catKey][index];
+    currentProduct = p;
+
+    document.getElementById('modalBand').className = 'modal-band ' + p.band;
+    document.getElementById('modalPerf').textContent = p.code;
+    document.getElementById('modalName').textContent = p.name;
+    document.getElementById('modalDesc').textContent = p.desc;
+    document.getElementById('modalPrice').textContent = '$' + p.price.toFixed(2);
+
+    const facts = document.getElementById('modalFacts');
+    facts.innerHTML = Object.entries(p.facts).map(([k, v]) => `
+      <div><span>${k}</span>${v}</div>
+    `).join('');
+
+    document.getElementById('modalAddBtn').onclick = () => {
+      addToCart(p.name, p.price);
+      closeModal();
+    };
+
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+
+  function closeModalBg(e) {
+    if (e.target.id === 'modalOverlay') closeModal();
+  }
+
+  /* =========================
+     CART (shared with homepage via localStorage)
+  ========================= */
+  let cart = JSON.parse(localStorage.getItem('fw_cart') || '[]');
+
+  function saveCart() {
+    localStorage.setItem('fw_cart', JSON.stringify(cart));
+    renderCart();
+  }
+
+  function addToCart(name, price) {
+    const existing = cart.find(i => i.name === name);
+    if (existing) { existing.qty += 1; }
+    else { cart.push({ name, price, qty: 1 }); }
+    saveCart();
+    toggleCart(true);
+  }
+
+  function removeFromCart(name) {
+    cart = cart.filter(i => i.name !== name);
+    saveCart();
+  }
+
+  function renderCart() {
+    const itemsEl = document.getElementById('cartItems');
+    const countEl = document.getElementById('cartCount');
+    const totalEl = document.getElementById('cartTotal');
+
+    const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
+    countEl.textContent = totalQty;
+
+    if (cart.length === 0) {
+      itemsEl.innerHTML = '<div class="cart-empty">Your cart is empty. Add some seeds!</div>';
+    } else {
+      itemsEl.innerHTML = cart.map(i => `
+        <div class="cart-item">
+          <span>${i.name} × ${i.qty}</span>
+          <span>$${(i.price * i.qty).toFixed(2)}
+            <button class="remove-item" onclick="removeFromCart('${i.name}')">remove</button>
+          </span>
+        </div>
+      `).join('');
+    }
+
+    const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+    totalEl.textContent = '$' + total.toFixed(2);
+  }
+
+  function toggleCart(forceOpen) {
+    const drawer = document.getElementById('cartDrawer');
+    const overlay = document.getElementById('cartOverlay');
+    const shouldOpen = forceOpen === true ? true : !drawer.classList.contains('open');
+    drawer.classList.toggle('open', shouldOpen);
+    overlay.classList.toggle('open', shouldOpen);
+  }
+
+  function checkout() {
+    if (cart.length === 0) { alert('Your cart is empty.'); return; }
+    alert('Redirecting to PayPal Checkout... (connect your real PayPal button here)');
+  }
+
+  renderCart();
+</script>
+
+</body>
+</html>
