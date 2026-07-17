@@ -1,3 +1,6 @@
+Here's the full `index.html` code, ready to copy straight from chat:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -247,6 +250,14 @@
     box-shadow: 0 10px 24px rgba(0,0,0,0.25);
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .packet:hover { transform: translateY(-4px); }
+
+  .specials-foot {
+    text-align: center;
+    margin-top: 36px;
   }
 
   .packet-band {
@@ -629,12 +640,12 @@
 
 <section id="seeds">
   <div class="wrap">
-    <div class="eyebrow mono">Packet no. 001–003</div>
-    <h2>Seeds for Sale</h2>
-    <p class="section-intro">Grown, saved, and packed by hand. Update prices and varieties as your stock changes.</p>
+    <div class="eyebrow mono">This week's specials</div>
+    <h2>Seed Specials</h2>
+    <p class="section-intro">A few favourites, hand-picked from the full range. Tap any packet to browse all seeds, flowers, and grain cropping.</p>
 
     <div class="packet-grid">
-      <div class="packet">
+      <div class="packet" onclick="location.href='seeds.html'">
         <div class="packet-band band-sorghum"></div>
         <div class="packet-perf"><span>SORGHUM-01</span><span>PACKET NO. 001</span></div>
         <div class="packet-body">
@@ -642,12 +653,12 @@
           <p>Hardy, drought-tolerant, straight off the home paddock. Great for beginners and old hands alike.</p>
           <div class="packet-foot">
             <span class="price">$8.00</span>
-            <button class="mini-btn" onclick="addToCart('Grain Sorghum', 8.00)">Add to Cart</button>
+            <button class="mini-btn" onclick="event.stopPropagation(); addToCart('Grain Sorghum', 8.00)">Add to Cart</button>
           </div>
         </div>
       </div>
 
-      <div class="packet">
+      <div class="packet" onclick="location.href='seeds.html'">
         <div class="packet-band band-wheat"></div>
         <div class="packet-perf"><span>WHEAT-02</span><span>PACKET NO. 002</span></div>
         <div class="packet-body">
@@ -655,12 +666,12 @@
           <p>An old-school variety saved season after season. Good yield, reliable, tried and tested.</p>
           <div class="packet-foot">
             <span class="price">$6.50</span>
-            <button class="mini-btn" onclick="addToCart('Heritage Wheat', 6.50)">Add to Cart</button>
+            <button class="mini-btn" onclick="event.stopPropagation(); addToCart('Heritage Wheat', 6.50)">Add to Cart</button>
           </div>
         </div>
       </div>
 
-      <div class="packet">
+      <div class="packet" onclick="location.href='seeds.html'">
         <div class="packet-band band-sky"></div>
         <div class="packet-perf"><span>GARDEN-03</span><span>PACKET NO. 003</span></div>
         <div class="packet-body">
@@ -668,10 +679,14 @@
           <p>A mixed pack for the home veggie patch — perfect for anyone starting their own small hub.</p>
           <div class="packet-foot">
             <span class="price">$5.00</span>
-            <button class="mini-btn" onclick="addToCart('Backyard Garden Mix', 5.00)">Add to Cart</button>
+            <button class="mini-btn" onclick="event.stopPropagation(); addToCart('Backyard Garden Mix', 5.00)">Add to Cart</button>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="specials-foot">
+      <a class="btn" href="seeds.html">View All Seeds</a>
     </div>
   </div>
 </section>
@@ -917,3 +932,4 @@
 
 </body>
 </html>
+```
